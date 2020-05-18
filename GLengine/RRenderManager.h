@@ -1,7 +1,10 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <map>
 #include <tuple>
+#include <string>
+#include <glm/glm.hpp>
 
 class RGame;
 class RMesh;
@@ -14,12 +17,10 @@ public:
 	/**
 	Inserts draw call in queue by binary partition, sorted by render queue
 	*/
-	void QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMaterial> material, std::weak_ptr<RTransformComponent> transform);
+	void QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMaterial> material, std::map<std::string, glm::mat4> data);
 	void Update();
 private:
 	RGame& game;
-	std::vector < std::tuple< std::weak_ptr<RMesh>, std::weak_ptr<RMaterial>, std::weak_ptr<RTransformComponent>>> drawCallQueue;
-
-	//std::vector<std::pair<RMesh&, std::weak_ptr<RMaterial>>> materialsQueue;
+	std::vector < std::tuple< std::weak_ptr<RMesh>, std::weak_ptr<RMaterial>, std::map<std::string, glm::mat4>>> drawCallQueue;
 };
 

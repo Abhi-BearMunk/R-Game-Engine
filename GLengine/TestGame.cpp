@@ -112,7 +112,7 @@ void TestGame::SetupMaterials()
 
 	// Transparent Window Material
 	transparentWindowMat = std::make_shared<RMaterial>("Shaders/SimpleVertex.vs", "Shaders/SimpleFrag.fs");
-	transparentWindowMat->renderQueue = 2001;
+	transparentWindowMat->renderQueue = 4000;
 	transparentWindowMat->alpha = true;
 	transparentWindowMat->depthMask = GL_FALSE;
 	transparentWindowMat->SetTexture("Texture_Diffuse", windowTexDiff);

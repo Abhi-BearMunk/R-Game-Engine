@@ -8,6 +8,7 @@
 #include "MeshUtil.h"
 #include "RTransformComponent.h"
 #include "RCameraComponent.h"
+#include "RRenderManager.h"
 
 
 RCameraComponent::RCameraComponent(const std::weak_ptr<REntity> _entity, const float& fov, const float& near, const float& far)
@@ -39,7 +40,7 @@ void RCameraComponent::Start()
 	};
 	defaultSkybox = std::make_shared<RCubeMap>(faceTexturePaths);
 	skyboxMaterial = std::make_shared<RMaterial>("Shaders/SkyboxVertex.vs", "Shaders/SkyboxFrag.fs");
-	//skyboxMaterial->renderQueue = 5000;
+	skyboxMaterial->renderQueue = 3000;
 	skyboxMaterial->SetTexture("skybox", defaultSkybox);
 }
 
@@ -69,9 +70,10 @@ void RCameraComponent::Update()
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
-	skyboxMaterial->SetMat4("R_MAT", projectionMat * glm::mat4(glm::mat3(viewMat)));
-	skyboxMaterial->Use();
-	skyMesh->Draw();
+	GetGame().GetRenderManager().lock()->QueueDrawCall(skyMesh, skyboxMaterial, { {"R_MAT", projectionMat * glm::mat4(glm::mat3(viewMat))} });
+	//skyboxMaterial->SetMat4("R_MAT", projectionMat * glm::mat4(glm::mat3(viewMat)));
+	//skyboxMaterial->Use();
+	//skyMesh->Draw();
 }
 
 void RCameraComponent::SetFieldOfView(const float& fov)

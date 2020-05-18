@@ -1,31 +1,28 @@
 #include <algorithm>    
 #include "RRenderManager.h"
-#include "RGame.h"
 #include "RMesh.h"
 #include "Material.h"
-#include "RTransformComponent.h"
-#include "RCameraComponent.h"
 
 RRenderManager::RRenderManager(RGame& _game)
 	:game(_game)
 {
 }
 
-void RRenderManager::QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMaterial> material, std::weak_ptr<RTransformComponent> transform)
+void RRenderManager::QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMaterial> material, std::map<std::string, glm::mat4> data)
 {
 	if (drawCallQueue.size() == 0)
 	{
-		drawCallQueue.push_back(std::make_tuple(mesh, material, transform));
+		drawCallQueue.push_back(std::make_tuple(mesh, material, data));
 		return;
 	}
 	else if (std::get<1>(drawCallQueue[drawCallQueue.size() - 1]).lock()->renderQueue <= material.lock()->renderQueue)
 	{
-		drawCallQueue.push_back(std::make_tuple(mesh, material, transform));
+		drawCallQueue.push_back(std::make_tuple(mesh, material, data));
 		return;
 	}
 	else if (std::get<1>(drawCallQueue[0]).lock()->renderQueue >= material.lock()->renderQueue)
 	{
-		drawCallQueue.insert(drawCallQueue.begin(), std::make_tuple(mesh, material, transform));
+		drawCallQueue.insert(drawCallQueue.begin(), std::make_tuple(mesh, material, data));
 		return;
 	}
 	
@@ -37,12 +34,12 @@ void RRenderManager::QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMat
 	{
 		if (std::get<1>(drawCallQueue[start]).lock()->renderQueue == material.lock()->renderQueue)
 		{
-			drawCallQueue.insert(drawCallQueue.begin() + start, std::make_tuple(mesh, material, transform));
+			drawCallQueue.insert(drawCallQueue.begin() + start, std::make_tuple(mesh, material, data));
 			return;
 		}
 		else if(std::get<1>(drawCallQueue[start]).lock()->renderQueue == material.lock()->renderQueue)
 		{
-			drawCallQueue.insert(drawCallQueue.begin() + end, std::make_tuple(mesh, material, transform));
+			drawCallQueue.insert(drawCallQueue.begin() + end, std::make_tuple(mesh, material, data));
 			return;
 		}
 		unsigned int newIndex = floor((start + end) / 2);
@@ -58,7 +55,7 @@ void RRenderManager::QueueDrawCall(std::weak_ptr<RMesh> mesh, std::weak_ptr<RMat
 		}
 	}
 
-	drawCallQueue.insert(drawCallQueue.begin() + start + 1, std::make_tuple(mesh, material, transform));
+	drawCallQueue.insert(drawCallQueue.begin() + start + 1, std::make_tuple(mesh, material, data));
 }
 
 void RRenderManager::Update()
@@ -67,28 +64,18 @@ void RRenderManager::Update()
 	{
 		auto mesh = std::get<0>(drawCallQueue[i]).lock();
 		auto material = std::get<1>(drawCallQueue[i]).lock();
-		auto transform = std::get<2>(drawCallQueue[i]).lock();
-		auto mainCamera = game.mainCamera.lock();
-
-		auto M = transform->GetTransformationMatrix();
-		auto M_INV = transform->GetWorldToLocalMatrix();
-		auto PV = mainCamera->GetViewProjectionMat();
-		auto PV_INV = mainCamera->GetInvViewProjectionMat();
-
-		auto MVP = PV * M;
-		auto MVP_INV = M_INV * PV_INV;
+		auto data = std::get<2>(drawCallQueue[i]);
 
 		if (material->alpha)
 		{
 			glEnable(GL_BLEND);
 		}
 
-		material->SetMat4("R_MATRIX_M", M);
-		material->SetMat4("R_MATRIX_MVP", MVP);
-		material->SetMat4("R_MATRIX_MVP_INV", MVP_INV);
-		material->SetMat4("R_MATRIX_NORMAL", glm::transpose(glm::inverse(M)));
+		for (auto it = data.begin(); it != data.end(); ++it)
+		{
+			material->SetMat4(it->first, it->second);
+		}
 		material->Use();
-
 		mesh->Draw();
 
 		glDisable(GL_BLEND);
