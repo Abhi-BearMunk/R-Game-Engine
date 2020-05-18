@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{c29d03f2-466f-4367-ab04-fcaad9c9bc7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{366cfbfa-8962-4f57-8b63-bb7f27f62982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{31c12da2-e67e-42cc-ad2f-47e39ff54453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6ad15acc-b2fa-47bc-a2ce-d2807b62824a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{6034c9a5-dba7-4f0c-8752-5745ac8fbe0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Includes">
+      <UniqueIdentifier>{57a6e6d9-4797-4ac3-8c46-92beeda495df}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RWindow.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RGame.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TestComponent.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="RMesh.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RTransformComponent.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RModelComponent.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RCameraComponent.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RFPSMoveComponent.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshUtil.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsUtil.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RPointLightComponent.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RColor.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RLightingManager.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RMoveInCircle.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="RDirectionalLightComponent.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RRenderManager.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGame.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="RFrameBuffer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RFrameBufferObject.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RCubeMap.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RTexture.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RWindow.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RGame.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="RMesh.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RTransformComponent.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RModelComponent.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RCameraComponent.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RFPSMoveComponent.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshUtil.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsUtil.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RColor.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RPointLightComponent.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RLightingManager.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="LightData.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RMoveInCircle.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="RDirectionalLightComponent.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RRenderManager.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGame.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="RFrameBuffer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RFrameBufferObject.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="REnums.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RCubeMap.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RTexture.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\SimpleFrag.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SimpleVertex.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Includes\Fragment.inc">
+      <Filter>Shaders\Includes</Filter>
+    </None>
+    <None Include="Shaders\Includes\Lighting.inc">
+      <Filter>Shaders\Includes</Filter>
+    </None>
+    <None Include="Shaders\Includes\Transforms.inc">
+      <Filter>Shaders\Includes</Filter>
+    </None>
+    <None Include="Shaders\OutlineVert.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\OutlineFrag.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\AlphaDiscard.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ScreenFrag.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ScreenVertex.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PostProcessTest.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\PostCombine.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SkyboxVertex.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\SkyboxFrag.fs">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ContainerDiff.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
