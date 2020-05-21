@@ -10,6 +10,7 @@ class RWindow;
 class RCameraComponent;
 class RLightingManager;
 class RRenderManager;
+class RShaderUtilsManager;
 class REntity;
 class RFrameBuffer;
 class RGame
@@ -18,6 +19,7 @@ private:
 	RWindow* gameWindow = nullptr;
 	const std::shared_ptr<RLightingManager> lightingManager;
 	const std::shared_ptr<RRenderManager> renderManager;
+	const std::shared_ptr<RShaderUtilsManager> shaderUtilsManager;
 
 	bool isRunning = true;
 	void ProcessGlobalInputs();

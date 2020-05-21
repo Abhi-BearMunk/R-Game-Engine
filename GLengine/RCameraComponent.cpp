@@ -15,18 +15,6 @@ RCameraComponent::RCameraComponent(const std::weak_ptr<REntity> _entity, const f
 	:RComponent(_entity), fieldOfView(fov), nearPlane(near), farPlane(far)
 {
 	CalculateProjectionMat();
-}
-
-void RCameraComponent::Start()
-{
-	// Create Camera UBO for shaders
-	glGenBuffers(1, &cameraUBO);
-
-	glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
-	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::vec4) + 4 * sizeof(glm::mat4) + 2 * sizeof(float), NULL, GL_STATIC_DRAW);
-	glBindBufferRange(GL_UNIFORM_BUFFER, 0, cameraUBO, 0, 2 * sizeof(glm::vec4) + 4 * sizeof(glm::mat4) + 2 * sizeof(float));
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
-
 	// Create Skybox
 	skyMesh = std::make_shared<RMesh>();
 	MeshUtil::CreatePrimitive(MeshUtil::PrimitiveType::Cube, skyMesh);
@@ -41,7 +29,19 @@ void RCameraComponent::Start()
 	defaultSkybox = std::make_shared<RCubeMap>(faceTexturePaths);
 	skyboxMaterial = std::make_shared<RMaterial>("Shaders/SkyboxVertex.vs", "Shaders/SkyboxFrag.fs");
 	skyboxMaterial->renderQueue = 3000;
+	skyboxMaterial->cullMode = GL_FRONT;
 	skyboxMaterial->SetTexture("skybox", defaultSkybox);
+}
+
+void RCameraComponent::Start()
+{
+	// Create Camera UBO for shaders
+	glGenBuffers(1, &cameraUBO);
+
+	glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+	glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::vec4) + 4 * sizeof(glm::mat4) + 2 * sizeof(float), NULL, GL_STATIC_DRAW);
+	glBindBufferRange(GL_UNIFORM_BUFFER, 0, cameraUBO, 0, 2 * sizeof(glm::vec4) + 4 * sizeof(glm::mat4) + 2 * sizeof(float));
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void RCameraComponent::Update()
@@ -71,9 +71,6 @@ void RCameraComponent::Update()
 	}
 
 	GetGame().GetRenderManager().lock()->QueueDrawCall(skyMesh, skyboxMaterial, { {"R_MAT", projectionMat * glm::mat4(glm::mat3(viewMat))} });
-	//skyboxMaterial->SetMat4("R_MAT", projectionMat * glm::mat4(glm::mat3(viewMat)));
-	//skyboxMaterial->Use();
-	//skyMesh->Draw();
 }
 
 void RCameraComponent::SetFieldOfView(const float& fov)

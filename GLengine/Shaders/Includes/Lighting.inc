@@ -44,34 +44,42 @@ layout (std140, binding = 2) uniform PointLights
 	uint numPointLights;
 };
 
-// calculates the color when using a directional light.
 vec3 CalcDirLight(DirLight light, LightingInput input)
 {
     vec3 lightDir = normalize(-light.direction.xyz);
+
     // diffuse shading
     float diff = max(dot(input.normal, lightDir), 0.0);
+
     // specular shading
-    vec3 reflectDir = reflect(-lightDir, input.normal);
-    float spec = pow(max(dot(input.viewDir, reflectDir), 0.0), input.shininess);
+    vec3 halfWay = normalize(lightDir + input.viewDir);
+    //vec3 reflectDir = reflect(-lightDir, input.normal);
+    float spec = pow(max(dot(input.normal, halfWay), 0.0), input.shininess);
+
     // combine results
     vec3 ambient_out = light.ambient.xyz * vec3(input.diffuse);
     vec3 diffuse_out = light.diffuse.xyz * diff * vec3(input.diffuse);
     vec3 specular_out = light.specular.xyz * spec * vec3(input.specular);
+
     return ambient_out + diffuse_out + specular_out;
 }
 
-// calculates the color when using a point light.
 vec3 CalcPointLight(PointLight light, LightingInput input)
 {
     vec3 lightDir = normalize(light.position.xyz - input.position);
+
     // diffuse shading
     float diff = max(dot(input.normal, lightDir), 0.0);
+
     // specular shading
-    vec3 reflectDir = reflect(-lightDir, input.normal);
-    float spec = pow(max(dot(input.viewDir, reflectDir), 0.0), input.shininess);
+    vec3 halfWay = normalize(lightDir + input.viewDir);
+    //vec3 reflectDir = reflect(-lightDir, input.normal);
+    float spec = pow(max(dot(input.normal, halfWay), 0.0), input.shininess);
+
     // attenuation
     float distance = length(light.position.xyz - input.position);
-    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));   
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
+    
     // combine results
     vec3 ambient_out = light.ambient.xyz * vec3(input.diffuse);
     vec3 diffuse_out = light.diffuse.xyz * diff * vec3(input.diffuse);
@@ -101,4 +109,5 @@ vec3 CalculateLighting(LightingInput input)
 	}
 
     return result;
+    //return pow(result, vec3(1.0 / 2.2));
 }

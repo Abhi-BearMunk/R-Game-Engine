@@ -114,6 +114,9 @@
     <ClCompile Include="RTexture.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="RShaderUtilsManager.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RWindow.h">
@@ -197,6 +200,9 @@
     <ClInclude Include="RTexture.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="RShaderUtilsManager.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\SimpleFrag.fs">
@@ -204,9 +210,6 @@
     </None>
     <None Include="Shaders\SimpleVertex.vs">
       <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Includes\Fragment.inc">
-      <Filter>Shaders\Includes</Filter>
     </None>
     <None Include="Shaders\Includes\Lighting.inc">
       <Filter>Shaders\Includes</Filter>
@@ -239,6 +242,21 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\SkyboxFrag.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\CubeMapReflection.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Includes\Utils.inc">
+      <Filter>Shaders\Includes</Filter>
+    </None>
+    <None Include="Shaders\MovingTrianglesVert.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\MovingTrianglesGeom.gs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\MovingTrianglesFrag.fs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

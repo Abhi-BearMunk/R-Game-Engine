@@ -41,6 +41,9 @@ bool RWindow::Init(const float& _width, const float& _height)
 	// Enable depth and stencil
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
+	glEnable(GL_FRAMEBUFFER_SRGB);
+	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CCW);
 
 	// Create FrameBuffer
 	frameBuffer = std::make_shared<RFrameBuffer>(width, height);
@@ -56,6 +59,7 @@ bool RWindow::Init(const float& _width, const float& _height)
 
 	// Create Screen Quad and Material
 	screenMat = std::make_shared<RMaterial>("Shaders/ScreenVertex.vs", "Shaders/ScreenFrag.fs");
+	screenMat->SetFloat("gamma", 2.2f);
 	screenQuad = std::make_shared<RMesh>();
 	MeshUtil::CreatePrimitive(MeshUtil::PrimitiveType::ScreenQuad, screenQuad);
 	//screenQuad->materials.push_back(screenMat);
@@ -84,6 +88,7 @@ void RWindow::PostProcess()
 	glDisable(GL_STENCIL_TEST);
 
 	screenMat->SetTexture("Source_Texture", postProcessframeBuffer->GetColorBufferTexture().lock());
+	screenMat->SetFloat("gamma", 1.0f / 1.0f);
 	screenMat->Use();
 	screenQuad->Draw();
 }
@@ -114,5 +119,11 @@ void RWindow::Blit(std::weak_ptr<RFrameBuffer> src, std::weak_ptr<RFrameBuffer> 
 	material.lock()->SetTexture("Source_Texture", src.lock()->GetColorBufferTexture().lock());
 	material.lock()->Use();
 	screenQuad->Draw();
+}
+
+inline void RWindow::SetGamma(float value)
+{
+	gamma = value; 
+	screenMat->SetFloat("gamma", gamma);
 }
 

@@ -66,10 +66,8 @@ void RRenderManager::Update()
 		auto material = std::get<1>(drawCallQueue[i]).lock();
 		auto data = std::get<2>(drawCallQueue[i]);
 
-		if (material->alpha)
-		{
-			glEnable(GL_BLEND);
-		}
+		material->cull ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+		material->alpha ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
 
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
@@ -77,9 +75,6 @@ void RRenderManager::Update()
 		}
 		material->Use();
 		mesh->Draw();
-
-		glDisable(GL_BLEND);
 	}
-
 	drawCallQueue.clear();
 }

@@ -20,11 +20,13 @@ public:
 	void Blit(std::weak_ptr<RFrameBuffer> src, std::weak_ptr<RFrameBuffer> dest, std::weak_ptr<RMaterial> material, bool enableDepth = false, bool enableStencil = false);
 	inline const float& GetWidth() { return width; }
 	inline const float& GetHeight() { return height; }
+	inline void SetGamma(float value);
 	inline std::weak_ptr<RFrameBuffer> GetFrameBuffer() { return frameBuffer; }
 	inline std::weak_ptr<RFrameBuffer> GetPostProcessFrameBuffer() { return postProcessframeBuffer; }
 private:
 	float width;
 	float height;
+	float gamma = 2.2f;
 	std::shared_ptr<RFrameBuffer> frameBuffer;
 	std::shared_ptr<RFrameBuffer> postProcessframeBuffer;
 	std::shared_ptr<RMaterial> screenMat;

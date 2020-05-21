@@ -3,11 +3,12 @@ out vec4 FragColor;
   
 in vec2 texCoords;
 
+uniform float gamma;
 uniform sampler2D Source_Texture;
 
 void main()
 { 
+    float g = gamma;
     vec3 col = texture(Source_Texture, texCoords).xyz;
-    float g = (col.x + col.y + col.z) * 0.33333;
-    FragColor = vec4(texture(Source_Texture, texCoords).xyz, 1);
+    FragColor = vec4(col, 1);
 }

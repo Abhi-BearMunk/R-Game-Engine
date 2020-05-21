@@ -59,7 +59,7 @@ RTexture2D::RTexture2D(float _width, float _height, ImageFormat _imageFormat, Wr
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-RTexture2D::RTexture2D(const char* texturePath, WrapMode _wrapMode, FilterMode _filterMode)
+RTexture2D::RTexture2D(const char* texturePath, bool gammaCorrection, WrapMode _wrapMode, FilterMode _filterMode)
 	: RTexture(_wrapMode, _filterMode)
 {
 	glGenTextures(1, &ID);
@@ -112,11 +112,11 @@ RTexture2D::RTexture2D(const char* texturePath, WrapMode _wrapMode, FilterMode _
 		internalFormat = GL_RG;
 		format = GL_RGB;
 	case 3:
-		internalFormat = GL_RGB;
+		gammaCorrection ? internalFormat = GL_SRGB : internalFormat = GL_RGB;
 		format = GL_RGB;
 		break;
 	case 4:
-		internalFormat = GL_RGBA;
+		gammaCorrection ? internalFormat = GL_SRGB_ALPHA : internalFormat = GL_RGBA;
 		break;
 	}
 

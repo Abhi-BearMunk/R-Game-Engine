@@ -15,3 +15,4 @@ uniform mat4 R_MATRIX_M;
 uniform mat4 R_MATRIX_MVP;
 uniform mat4 R_MATRIX_MVP_INV;
 uniform mat4 R_MATRIX_NORMAL;
+uniform mat4 R_MATRIX_NORMAL_VS;

@@ -19,9 +19,9 @@ RPointLightComponent::RPointLightComponent(const std::weak_ptr<REntity> _entity,
 	pointLight.ambient = glm::vec4(0, 0, 0, 1);
 	pointLight.diffuse = color.ToVec4();
 	pointLight.specular = color.ToVec4();
-	pointLight.constant = 1;
-	pointLight.linear = 4.48f / radius;
-	pointLight.quadratic = 71.68 / pow(radius, 2);
+	pointLight.constant = 0;
+	pointLight.linear = 0;
+	pointLight.quadratic = 1 / pow(radius, 2);
 }
 
 RPointLightComponent::~RPointLightComponent()
@@ -58,6 +58,9 @@ void RPointLightComponent::SetSpecular(RColor color)
 
 void RPointLightComponent::SetRadius(float radius) 
 { 
-	lightingManager.lock()->GetPointLight(index).linear = 4.48f / radius; 
-	lightingManager.lock()->GetPointLight(index).quadratic = 71.68 / pow(radius, 2); 
+	//lightingManager.lock()->GetPointLight(index).linear = 4.48f / radius; 
+	//lightingManager.lock()->GetPointLight(index).quadratic = 71.68 / pow(radius, 2); 
+
+	lightingManager.lock()->GetPointLight(index).linear = 0;
+	lightingManager.lock()->GetPointLight(index).quadratic = 1 / pow(radius, 2);
 }

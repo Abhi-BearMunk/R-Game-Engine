@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include "RCubeMap.h"
 
-RMaterial::RMaterial(const char* vertexShaderPath, const char* fragmentShaderPath)
+RMaterial::RMaterial(const char* vertexShaderPath, const char* fragmentShaderPath, const char* geometryShaderPath)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode = Shadinclude::load(vertexShaderPath);
@@ -28,11 +28,27 @@ RMaterial::RMaterial(const char* vertexShaderPath, const char* fragmentShaderPat
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
+    unsigned int geom;
+    // Optional Geometry Shader
+    if (geometryShaderPath)
+    {
+        std::string geometryCode = Shadinclude::load(geometryShaderPath);
+        const char* gShaderCode = geometryCode.c_str();
+        geom = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(geom, 1, &gShaderCode, NULL);
+        glCompileShader(geom);
+        checkCompileErrors(geom, "GEOMETRY");
+        glAttachShader(ID, geom);
+    }
     glLinkProgram(ID);
     checkCompileErrors(ID, "PROGRAM");
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+    if (geometryShaderPath)
+    {
+        glDeleteShader(geom);
+    }
 }
 
 RMaterial::~RMaterial()
@@ -47,6 +63,8 @@ void RMaterial::Activate() const
 
 void RMaterial::Use() const
 {
+    // Cull
+    glCullFace(cullMode);
     // Transparency
     glBlendFunc(blendFuncSrc, blendFuncDest);
     // Depth

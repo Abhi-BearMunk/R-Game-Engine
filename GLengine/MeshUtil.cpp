@@ -30,8 +30,8 @@ void MeshUtil::CreateQuad(std::weak_ptr<RMesh> mesh)
 	};
 
 	mesh.lock()->indices = {
-		0, 1, 2,
-		2, 3, 0,
+		2, 1, 0,
+		0, 3, 2,
 	};
 
 	// Finalize
@@ -69,12 +69,12 @@ void MeshUtil::CreateCube(std::weak_ptr<RMesh> mesh)
 	};
 
 	mesh.lock()->indices = {
-		0, 1, 2,
-		2, 3, 0,
-		4, 5, 6,
-		6, 7, 4,
-		8, 9, 10,
-		10, 11, 8,
+		0, 3, 2,
+		2, 1, 0,
+		4, 7, 6,
+		6, 5, 4,
+		8, 11, 10,
+		10, 9, 8,
 		12, 13, 14,
 		14, 15, 12,
 		16, 17, 18,
@@ -91,8 +91,8 @@ void MeshUtil::CreateSphere(std::weak_ptr<RMesh> mesh)
 {
 	float radius = 0.5f;
 	float PI = 3.14159265359f;
-	int sectorCount = 40;
-	int stackCount = 16;
+	int sectorCount = 60;
+	int stackCount = 24;
 
 	float x, y, z, xy;                              // vertex position
 	float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
@@ -173,8 +173,8 @@ void MeshUtil::CreateScreenQuad(std::weak_ptr<RMesh> mesh)
 	};
 
 	mesh.lock()->indices = {
-		0, 1, 2,
-		2, 3, 0,
+		2, 1, 0,
+		0, 3, 2,
 	};
 
 	// Finalize

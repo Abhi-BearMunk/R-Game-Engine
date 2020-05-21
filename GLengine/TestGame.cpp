@@ -8,6 +8,8 @@
 #include "RPointLightComponent.h"
 #include "RDirectionalLightComponent.h"
 #include "RTransformComponent.h"
+#include "RCameraComponent.h"
+#include "RCubeMap.h"
 #include "RMoveInCircle.h"
 #include "RWindow.h"
 #include "RFrameBuffer.h"
@@ -19,19 +21,19 @@ void TestGame::Setup()
 	SetupMaterials();
 
 	// Create Entities
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Sphere, {defaulSphereMat}, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(50, -30, 0));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(0.5, -0.0, 1.5), glm::vec3(1.2, 1.2, 1.2), glm::vec3(15, 20, 70));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(-1, 0.1, -1));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(2, 0.2, 0));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(-1.5, 1, -2));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(-3, 0.4, 3));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(2.5, 0.3, 2));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulFloorMat }, glm::vec3(0, -1, 0), glm::vec3(10, 0.2, 10));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Sphere, {defaulSphereMat}, glm::vec3(0, 5, 0), glm::vec3(3, 3, 3), glm::vec3(50, -30, 0));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(0.5 * 3, -0.0, 3 * 3), glm::vec3(1.2, 1.2, 1.2), glm::vec3(15, 20, 70));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(-4 * 3, 0.1, -1 * 3));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { boxOutline1Mat, Outline2Mat }, glm::vec3(4 * 3, 0.2, 0));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(-1.5 * 3, 1, -2 * 3));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(-3 * 3, 0.4, 3 * 3));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulBoxMat }, glm::vec3(2.5 * 3, 0.3, 2 * 3));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Cube, { defaulFloorMat }, glm::vec3(0, -1, 0), glm::vec3(30, 0.2, 30));
 
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(0, 1.5, 5), glm::vec3(10, 10, 5));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(0, 1.5, -5), glm::vec3(10, 10, 5));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(5, 1.5, 0), glm::vec3(10, 10, 5), glm::vec3(0, 90, 0));
-	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(-5, 1.5, 0), glm::vec3(10, 10, 5), glm::vec3(0, 90, 0));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(0, 1.5, 15), glm::vec3(30, 10, 5));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(0, 1.5, -15), glm::vec3(30, 10, 5));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(15, 1.5, 0), glm::vec3(30, 10, 5), glm::vec3(0, 90, 0));
+	CreatePrimitiveEntity(MeshUtil::PrimitiveType::Quad, { transparentWindowMat }, glm::vec3(-15, 1.5, 0), glm::vec3(30, 10, 5), glm::vec3(0, 90, 0));
 
 	for (int i = 0; i < 20; i++)
 	{
@@ -40,21 +42,25 @@ void TestGame::Setup()
 
 	// Lights
 	auto pointLight1 = CreateEntity();
-	pointLight1.lock()->AddComponent<RTransformComponent>(glm::vec3(0, 0, 5));
-	pointLight1.lock()->AddComponent<RPointLightComponent>(RColor::Orange, 20);
-	pointLight1.lock()->AddComponent<RMoveInCircle>(30, 4);
+	pointLight1.lock()->AddComponent<RTransformComponent>(glm::vec3(0, 3, 5));
+	pointLight1.lock()->AddComponent<RPointLightComponent>(RColor::Cyan, 10);
+	pointLight1.lock()->AddComponent<RMoveInCircle>(30, 10, glm::vec3(0, 3, 0));
 
 	auto pointLight2 = CreateEntity();
-	pointLight2.lock()->AddComponent<RTransformComponent>(glm::vec3(-2, 2, 0));
-	pointLight2.lock()->AddComponent<RPointLightComponent>(RColor::Purple, 50);
+	pointLight2.lock()->AddComponent<RTransformComponent>(glm::vec3(-6, 2, 8));
+	pointLight2.lock()->AddComponent<RPointLightComponent>(RColor::Purple, 10);
 
 	auto pointLight3 = CreateEntity();
-	pointLight3.lock()->AddComponent<RTransformComponent>(glm::vec3(3.5, 1, -1));
-	pointLight3.lock()->AddComponent<RPointLightComponent>(RColor::Green, 50);
+	pointLight3.lock()->AddComponent<RTransformComponent>(glm::vec3(8, 1, -6));
+	pointLight3.lock()->AddComponent<RPointLightComponent>(RColor::Green, 10);
+
+	/*auto pointLight4 = CreateEntity();
+	pointLight4.lock()->AddComponent<RTransformComponent>(glm::vec3(0, 1, 0));
+	pointLight4.lock()->AddComponent<RPointLightComponent>(RColor::Red, 500);*/
 
 	auto dirLight1 = CreateEntity();
-	dirLight1.lock()->AddComponent<RTransformComponent>(glm::vec3(0, 0, 5), glm::vec3(1, 1, 1), glm::vec3(135, 0, 45));
-	dirLight1.lock()->AddComponent<RDirectionalLightComponent>(RColor::FromVec4(RColor::Beige * 0.3f));
+	dirLight1.lock()->AddComponent<RTransformComponent>(glm::vec3(0, 0, 5), glm::vec3(1, 1, 1), glm::vec3(135, 0, 0));
+	dirLight1.lock()->AddComponent<RDirectionalLightComponent>(RColor::FromVec4(RColor::Beige * 1.0f));
 }
 
 void TestGame::PostProcess(std::weak_ptr<RFrameBuffer> src, std::weak_ptr<RFrameBuffer> dest)
@@ -73,13 +79,13 @@ void TestGame::PostProcess(std::weak_ptr<RFrameBuffer> src, std::weak_ptr<RFrame
 void TestGame::SetupMaterials()
 {
 	// Textures
-	auto boxTexDiff = std::make_shared<RTexture2D>("Assets/ContainerDiff.png", WrapMode::Repeat);
-	auto boxTexSpec = std::make_shared<RTexture2D>("Assets/ContainerSpec.png", WrapMode::Repeat);
-	auto floorTexDiff = std::make_shared<RTexture2D>("Assets/HexagonTile_DIFF.png", WrapMode::Repeat);
-	auto floorTexSpec = std::make_shared<RTexture2D>("Assets/HexagonTile_SPEC.png", WrapMode::Repeat);
-	auto sphereTexDiff = std::make_shared<RTexture2D>("Assets/marble/marble_0013_base_color_2k.jpg", WrapMode::Repeat);
-	auto grassTexDiff = std::make_shared<RTexture2D>("Assets/grass.png", WrapMode::Repeat);
-	auto windowTexDiff = std::make_shared<RTexture2D>("Assets/blending_transparent_window.png", WrapMode::Repeat);
+	auto boxTexDiff = std::make_shared<RTexture2D>("Assets/ContainerDiff.png", true, WrapMode::Repeat);
+	auto boxTexSpec = std::make_shared<RTexture2D>("Assets/ContainerSpec.png", false, WrapMode::Repeat);
+	auto floorTexDiff = std::make_shared<RTexture2D>("Assets/HexagonTile_DIFF.png", true, WrapMode::Repeat);
+	auto floorTexSpec = std::make_shared<RTexture2D>("Assets/HexagonTile_SPEC.png", false, WrapMode::Repeat);
+	auto sphereTexDiff = std::make_shared<RTexture2D>("Assets/marble/marble_0013_base_color_2k.jpg", true, WrapMode::Repeat);
+	auto grassTexDiff = std::make_shared<RTexture2D>("Assets/grass.png", true, WrapMode::Repeat);
+	auto windowTexDiff = std::make_shared<RTexture2D>("Assets/blending_transparent_window.png", true, WrapMode::Repeat);
 
 	//auto sphereTexSpec = std::make_shared<RTexture>("Assets/marble/marble_0013_roughness_2k.jpg", WrapMode::Repeat);
 
@@ -88,11 +94,13 @@ void TestGame::SetupMaterials()
 	defaulBoxMat->SetTexture("Texture_Diffuse", boxTexDiff);
 	defaulBoxMat->SetTexture("Texture_Specular", boxTexSpec);
 	defaulBoxMat->SetVec2("tiling", glm::vec2(1, 1));
-	defaulBoxMat->SetFloat("shininess", 128);
+	defaulBoxMat->SetFloat("shininess", 8);
 
 	// Default Sphere Material
-	defaulSphereMat = std::make_shared<RMaterial>("Shaders/SimpleVertex.vs", "Shaders/SimpleFrag.fs");
+	defaulSphereMat = std::make_shared<RMaterial>("Shaders/MovingTrianglesVert.vs", "Shaders/MovingTrianglesFrag.fs", "Shaders/MovingTrianglesGeom.gs");
+	defaulSphereMat->cull = false;
 	defaulSphereMat->SetTexture("Texture_Diffuse", sphereTexDiff);
+	defaulSphereMat->SetTexture("Texture_Reflection", mainCamera.lock()->defaultSkybox);
 	//defaulSphereMat->SetTexture("Texture_Specular", sphereTexSpec);
 	defaulSphereMat->SetVec2("tiling", glm::vec2(1, 1));
 	defaulSphereMat->SetFloat("shininess", 128);
@@ -106,6 +114,7 @@ void TestGame::SetupMaterials()
 
 	// Default Grass Material
 	grassMat = std::make_shared<RMaterial>("Shaders/SimpleVertex.vs", "Shaders/AlphaDiscard.fs");
+	grassMat->cull = false;
 	grassMat->SetTexture("Texture_Diffuse", grassTexDiff);
 	grassMat->SetVec2("tiling", glm::vec2(1, 1));
 	grassMat->SetFloat("shininess", 128);
@@ -113,6 +122,7 @@ void TestGame::SetupMaterials()
 	// Transparent Window Material
 	transparentWindowMat = std::make_shared<RMaterial>("Shaders/SimpleVertex.vs", "Shaders/SimpleFrag.fs");
 	transparentWindowMat->renderQueue = 4000;
+	transparentWindowMat->cull = false;
 	transparentWindowMat->alpha = true;
 	transparentWindowMat->depthMask = GL_FALSE;
 	transparentWindowMat->SetTexture("Texture_Diffuse", windowTexDiff);

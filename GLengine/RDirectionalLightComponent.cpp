@@ -16,7 +16,7 @@ RDirectionalLightComponent::RDirectionalLightComponent(const std::weak_ptr<REnti
 	RDirLight& dirLight = lightingManager.lock()->GetDirectionalLight(index);
 
 	// Set light properties
-	dirLight.ambient = color.ToVec4() * 0.1f;
+	dirLight.ambient = color.ToVec4() * 0.2f;
 	dirLight.diffuse = color.ToVec4();
 	dirLight.specular = color.ToVec4();
 }

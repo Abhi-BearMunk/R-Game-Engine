@@ -101,6 +101,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +166,7 @@
     <ClCompile Include="RTexture.cpp" />
     <ClCompile Include="RTransformComponent.cpp" />
     <ClCompile Include="RWindow.cpp" />
+    <ClCompile Include="RShaderUtilsManager.cpp" />
     <ClCompile Include="TestComponent.cpp" />
     <ClCompile Include="TestGame.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -194,15 +196,20 @@
     <ClInclude Include="RTexture.h" />
     <ClInclude Include="RTransformComponent.h" />
     <ClInclude Include="RWindow.h" />
+    <ClInclude Include="RShaderUtilsManager.h" />
     <ClInclude Include="TestComponent.h" />
     <ClInclude Include="TestGame.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\AlphaDiscard.fs" />
-    <None Include="Shaders\Includes\Fragment.inc" />
+    <None Include="Shaders\CubeMapReflection.fs" />
+    <None Include="Shaders\Includes\Utils.inc" />
     <None Include="Shaders\Includes\Lighting.inc" />
     <None Include="Shaders\Includes\Transforms.inc" />
+    <None Include="Shaders\MovingTrianglesFrag.fs" />
+    <None Include="Shaders\MovingTrianglesGeom.gs" />
+    <None Include="Shaders\MovingTrianglesVert.vs" />
     <None Include="Shaders\OutlineFrag.fs" />
     <None Include="Shaders\OutlineVert.vs" />
     <None Include="Shaders\PostCombine.fs" />

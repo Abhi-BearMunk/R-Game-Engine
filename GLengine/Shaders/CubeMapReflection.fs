@@ -7,6 +7,7 @@
 // Uniforms
 uniform sampler2D Texture_Diffuse;
 uniform sampler2D Texture_Specular;
+uniform samplerCube Texture_Reflection;
 uniform float shininess;
 uniform vec2 tiling;
 
@@ -20,19 +21,22 @@ out vec4 FragColor;
 
 void main()
 {    
-    vec4 albedo = texture(Texture_Diffuse, texCoords * tiling);
-    if(albedo.a < 0.1)
-        discard;
+    // Reflection
+    vec3 I = normalize(vertexPos.xyz - viewPos.xyz);
+    vec3 N = normalize(normal.xyz);
+    vec3 R = reflect(I, N);
 
+    // Light
     LightingInput input;
-
-	// properties
+    vec4 albedo = texture(Texture_Diffuse, texCoords * tiling);
     input.diffuse = vec3(albedo);
     input.specular = vec3(texture(Texture_Specular, texCoords * tiling));
     input.shininess = shininess;
     input.position = vertexPos.xyz;
-    input.normal = normalize(normal.xyz);
-    input.viewDir = normalize(viewPos.xyz - vertexPos.xyz);
+    input.normal = N;
+    input.viewDir = -I;
+
+    vec3 light = CalculateLighting(input);
     
-    FragColor = vec4(CalculateLighting(input), albedo.w);
+    FragColor = vec4(light * 0.3 + 0.7 * texture(Texture_Reflection, R).rgb, albedo.w);
 }

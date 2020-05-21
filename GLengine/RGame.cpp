@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "RLightingManager.h"
 #include "RRenderManager.h"
+#include "RShaderUtilsManager.h"
 #include "RCameraComponent.h"
 #include "RTransformComponent.h"
 #include "RFPSMoveComponent.h"
@@ -11,7 +12,8 @@
 
 RGame::RGame()
 	:lightingManager(std::make_shared<RLightingManager>()),
-	renderManager(std::make_shared<RRenderManager>(*this))
+	renderManager(std::make_shared<RRenderManager>(*this)),
+	shaderUtilsManager(std::make_shared<RShaderUtilsManager>())
 {
 }
 
@@ -53,6 +55,7 @@ bool RGame::Init()
 
 	// Init Managers
 	lightingManager->Init();
+	shaderUtilsManager->Init();
 
 	// Create Camera
 	auto camera = CreateEntity();
@@ -82,6 +85,7 @@ void RGame::Update()
 		[](const auto& entity) {entity->Update(); });
 
 	// Finish update
+	shaderUtilsManager->Update();
 	lightingManager->Update();
 	renderManager->Update();
 

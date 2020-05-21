@@ -26,6 +26,7 @@ void RModelComponent::Update()
 
 		auto M = transform->GetTransformationMatrix();
 		auto M_INV = transform->GetWorldToLocalMatrix();
+		auto V = mainCamera->GetViewMat();
 		auto PV = mainCamera->GetViewProjectionMat();
 		auto PV_INV = mainCamera->GetInvViewProjectionMat();
 
@@ -37,6 +38,7 @@ void RModelComponent::Update()
 		data.insert({ "R_MATRIX_MVP", MVP });
 		data.insert({ "R_MATRIX_MVP_INV", MVP_INV });
 		data.insert({ "R_MATRIX_NORMAL", glm::transpose(glm::inverse(M)) });
+		data.insert({ "R_MATRIX_NORMAL_VS", glm::transpose(glm::inverse(V * M)) });
 
 		// Draw meshes
 		for (auto mesh = meshes.begin(); mesh != meshes.end(); ++mesh)
