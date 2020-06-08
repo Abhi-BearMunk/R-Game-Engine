@@ -11,7 +11,7 @@ uniform samplerCube Texture_Reflection;
 uniform float shininess;
 uniform vec2 tiling;
 
-// Inputs
+// LInputs
 in vec2 texCoords;
 in vec4 vertexPos;
 in vec4 normal;
@@ -27,17 +27,17 @@ void main()
     vec3 R = reflect(I, N);
 
     // Light
-    LightingInput input;
+    LightingInput LInput;
     vec4 albedo = texture(Texture_Diffuse, texCoords * tiling);
-    input.diffuse = vec3(albedo);
-    input.diffuse = vec3(0.3f);
-    input.specular = vec3(texture(Texture_Specular, texCoords * tiling));
-    input.shininess = shininess;
-    input.position = vertexPos.xyz;
-    input.normal = N;
-    input.viewDir = -I;
+    LInput.diffuse = vec3(albedo);
+    LInput.diffuse = vec3(0.3f);
+    LInput.specular = vec3(texture(Texture_Specular, texCoords * tiling));
+    LInput.shininess = shininess;
+    LInput.position = vertexPos.xyz;
+    LInput.normal = N;
+    LInput.viewDir = -I;
 
-    vec3 light = CalculateLighting(input);
+    vec3 light = CalculateLighting(LInput);
     
     FragColor = vec4(light * texture(Texture_Reflection, R).rgb, albedo.w);
 }

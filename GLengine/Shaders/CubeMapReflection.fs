@@ -27,16 +27,16 @@ void main()
     vec3 R = reflect(I, N);
 
     // Light
-    LightingInput input;
+    LightingInput LInput;
     vec4 albedo = texture(Texture_Diffuse, texCoords * tiling);
-    input.diffuse = vec3(albedo);
-    input.specular = vec3(texture(Texture_Specular, texCoords * tiling));
-    input.shininess = shininess;
-    input.position = vertexPos.xyz;
-    input.normal = N;
-    input.viewDir = -I;
+    LInput.diffuse = vec3(albedo);
+    LInput.specular = vec3(texture(Texture_Specular, texCoords * tiling));
+    LInput.shininess = shininess;
+    LInput.position = vertexPos.xyz;
+    LInput.normal = N;
+    LInput.viewDir = -I;
 
-    vec3 light = CalculateLighting(input);
+    vec3 light = CalculateLighting(LInput);
     
     FragColor = vec4(light * 0.3 + 0.7 * texture(Texture_Reflection, R).rgb, albedo.w);
 }

@@ -44,46 +44,46 @@ layout (std140, binding = 2) uniform PointLights
 	uint numPointLights;
 };
 
-vec3 CalcDirLight(DirLight light, LightingInput input)
+vec3 CalcDirLight(DirLight light, LightingInput LInput)
 {
     vec3 lightDir = normalize(-light.direction.xyz);
 
     // diffuse shading
-    float diff = max(dot(input.normal, lightDir), 0.0);
+    float diff = max(dot(LInput.normal, lightDir), 0.0);
 
     // specular shading
-    vec3 halfWay = normalize(lightDir + input.viewDir);
-    //vec3 reflectDir = reflect(-lightDir, input.normal);
-    float spec = pow(max(dot(input.normal, halfWay), 0.0), input.shininess);
+    vec3 halfWay = normalize(lightDir + LInput.viewDir);
+    //vec3 reflectDir = reflect(-lightDir, LInput.normal);
+    float spec = pow(max(dot(LInput.normal, halfWay), 0.0), LInput.shininess);
 
     // combine results
-    vec3 ambient_out = light.ambient.xyz * vec3(input.diffuse);
-    vec3 diffuse_out = light.diffuse.xyz * diff * vec3(input.diffuse);
-    vec3 specular_out = light.specular.xyz * spec * vec3(input.specular);
+    vec3 ambient_out = light.ambient.xyz * vec3(LInput.diffuse);
+    vec3 diffuse_out = light.diffuse.xyz * diff * vec3(LInput.diffuse);
+    vec3 specular_out = light.specular.xyz * spec * vec3(LInput.specular);
 
     return ambient_out + diffuse_out + specular_out;
 }
 
-vec3 CalcPointLight(PointLight light, LightingInput input)
+vec3 CalcPointLight(PointLight light, LightingInput LInput)
 {
-    vec3 lightDir = normalize(light.position.xyz - input.position);
+    vec3 lightDir = normalize(light.position.xyz - LInput.position);
 
     // diffuse shading
-    float diff = max(dot(input.normal, lightDir), 0.0);
+    float diff = max(dot(LInput.normal, lightDir), 0.0);
 
     // specular shading
-    vec3 halfWay = normalize(lightDir + input.viewDir);
-    //vec3 reflectDir = reflect(-lightDir, input.normal);
-    float spec = pow(max(dot(input.normal, halfWay), 0.0), input.shininess);
+    vec3 halfWay = normalize(lightDir + LInput.viewDir);
+    //vec3 reflectDir = reflect(-lightDir, LInput.normal);
+    float spec = pow(max(dot(LInput.normal, halfWay), 0.0), LInput.shininess);
 
     // attenuation
-    float distance = length(light.position.xyz - input.position);
+    float distance = length(light.position.xyz - LInput.position);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));  
     
     // combine results
-    vec3 ambient_out = light.ambient.xyz * vec3(input.diffuse);
-    vec3 diffuse_out = light.diffuse.xyz * diff * vec3(input.diffuse);
-    vec3 specular_out = light.specular.xyz * spec * vec3(input.specular);
+    vec3 ambient_out = light.ambient.xyz * vec3(LInput.diffuse);
+    vec3 diffuse_out = light.diffuse.xyz * diff * vec3(LInput.diffuse);
+    vec3 specular_out = light.specular.xyz * spec * vec3(LInput.specular);
 
     ambient_out *= attenuation;
     diffuse_out *= attenuation ;
@@ -92,20 +92,20 @@ vec3 CalcPointLight(PointLight light, LightingInput input)
     return ambient_out + diffuse_out + specular_out;
 }
 
-vec3 CalculateLighting(LightingInput input)
+vec3 CalculateLighting(LightingInput LInput)
 {
 	vec3 result = vec3(0,0,0);
 
     // phase 1: directional lighting
 	for(int i = 0; i < numDirLights; i++)
 	{
-	    result += CalcDirLight(dirlights[i], input);
+	    result += CalcDirLight(dirlights[i], LInput);
 	}
     
     // phase 2: point lights
     for(int i = 0; i < numPointLights; i++)
 	{
-        result += CalcPointLight(pointLights[i], input);    
+        result += CalcPointLight(pointLights[i], LInput);    
 	}
 
     return result;

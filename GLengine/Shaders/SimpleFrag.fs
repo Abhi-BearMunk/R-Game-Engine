@@ -20,16 +20,16 @@ out vec4 FragColor;
 
 void main()
 {    
-    LightingInput input;
+    LightingInput LInput;
 
 	// properties
     vec4 albedo = texture(Texture_Diffuse, texCoords * tiling);
-    input.diffuse = vec3(albedo);
-    input.specular = vec3(texture(Texture_Specular, texCoords * tiling));
-    input.shininess = shininess;
-    input.position = vertexPos.xyz;
-    input.normal = normalize(normal.xyz);
-    input.viewDir = normalize(viewPos.xyz - vertexPos.xyz);
+    LInput.diffuse = vec3(albedo);
+    LInput.specular = vec3(texture(Texture_Specular, texCoords * tiling));
+    LInput.shininess = shininess;
+    LInput.position = vertexPos.xyz;
+    LInput.normal = normalize(normal.xyz);
+    LInput.viewDir = normalize(viewPos.xyz - vertexPos.xyz);
     
-    FragColor = vec4(CalculateLighting(input), albedo.w);
+    FragColor = vec4(CalculateLighting(LInput), albedo.w);
 }

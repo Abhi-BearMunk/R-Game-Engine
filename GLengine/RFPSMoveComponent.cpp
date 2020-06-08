@@ -24,19 +24,19 @@ void RFPSMoveComponent::Update()
 	// WASD
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		transform.lock()->SetPosition(transform.lock()->GetPosition() - transform.lock()->Forward() * (1.0f / 60.0f));
+		transform.lock()->SetPosition(transform.lock()->GetPosition() - moveSpeed * transform.lock()->Forward() * (1.0f / 60.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		transform.lock()->SetPosition(transform.lock()->GetPosition() + transform.lock()->Forward() * (1.0f / 60.0f));
+		transform.lock()->SetPosition(transform.lock()->GetPosition() + moveSpeed * transform.lock()->Forward() * (1.0f / 60.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		transform.lock()->SetPosition(transform.lock()->GetPosition() - transform.lock()->Right() * (1.0f / 60.0f));
+		transform.lock()->SetPosition(transform.lock()->GetPosition() - moveSpeed * transform.lock()->Right() * (1.0f / 60.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		transform.lock()->SetPosition(transform.lock()->GetPosition() + transform.lock()->Right() * (1.0f / 60.0f));
+		transform.lock()->SetPosition(transform.lock()->GetPosition() + moveSpeed * transform.lock()->Right() * (1.0f / 60.0f));
 	}
 
 	// Mouse Move

@@ -12,7 +12,7 @@ class RWindow
 {
 public:
 	GLFWwindow* window;
-	bool Init(const float& _width = 1280, const float& _height = 720);
+	bool Init(const float& _width = 1920, const float& _height = 1080);
 	void PreUpdate();
 	void PostProcess();
 	void FinishUpdate();
